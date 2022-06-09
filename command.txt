@@ -1,0 +1,26 @@
+go test
+
+
+cd services
+    go test services -v
+
+root path   
+    go test <module>/services -v
+    go test <module>/services -v --run <name func for test>
+
+
+multiple test
+    go test ./.. 
+
+coverage
+    go test go-unit-test/services -cover
+
+code test sub
+    go test go-unit-test/services -run ="TestCheckGrade/TestCheckGrade/success grade a"
+
+bechmark
+    go test go-unit-test/services -bench="BenchmarkCheckGrade"
+    go test go-unit-test/services -bench=.
+    go test go-unit-test/services -bench=. -benchmem
+
+example go doc
