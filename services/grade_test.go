@@ -48,6 +48,7 @@ func TestCheckGrade(t *testing.T) {
 		{name: "d", score: 50, expected: "D"},
 		{name: "d", score: 0, expected: "F"},
 	}
+	
 	for _, c := range cases {
 		t.Run("success grade a", func(t *testing.T) {
 			grade := services.CheckGrade(c.score)

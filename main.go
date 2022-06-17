@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	// fmt.Println("started!")
 	c := CustomerRepositoryMock{}
 	c.On("GetCustomer", 1).Return("keem", 18, nil)
 	c.On("GetCustomer", 2).Return("", 0, errors.New("not found"))
@@ -24,6 +23,7 @@ type CustomerRepository interface {
 	GetCustomer(id int) (name string, age int, err error)
 	Hello()
 }
+
 type CustomerRepositoryMock struct {
 	mock.Mock
 }
@@ -32,6 +32,8 @@ func (m *CustomerRepositoryMock) GetCustomer(id int) (name string, age int, err 
 	args := m.Called(id)
 	return args.String(0), args.Int(1), args.Error(2)
 }
+
+// =====================================
 func (m *CustomerRepositoryMock) Hello() {
 	fmt.Println(m)
 }

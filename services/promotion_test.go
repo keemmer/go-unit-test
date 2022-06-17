@@ -29,7 +29,7 @@ func TestPromotionCalculateDiscount(t *testing.T) {
 		name            string
 		purchaseMin     int
 		discountPercent int
-		amount          int
+		amount          int 
 		expected        int
 	}
 	cases := []testCase{

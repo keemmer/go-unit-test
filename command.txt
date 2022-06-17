@@ -24,3 +24,8 @@ bechmark
     go test go-unit-test/services -bench=. -benchmem
 
 example go doc
+
+
+
+libary for mock data
+    testify -> you can copy mock/assert
