@@ -1,6 +1,7 @@
 package services_test
 
 import (
+	"errors"
 	"go-unit-test/repositories"
 	"go-unit-test/services"
 	"testing"
@@ -35,8 +36,8 @@ func TestPromotionCalculateDiscount(t *testing.T) {
 	cases := []testCase{
 		{name: "applied 100", purchaseMin: 100, discountPercent: 20, amount: 100, expected: 80},
 		{name: "applied 200", purchaseMin: 100, discountPercent: 20, amount: 200, expected: 160},
-		{name: "applied 100", purchaseMin: 100, discountPercent: 20, amount: 300, expected: 240},
-		{name: "applied 100", purchaseMin: 100, discountPercent: 20, amount: 50, expected: 50},
+		{name: "applied 300", purchaseMin: 100, discountPercent: 20, amount: 300, expected: 240},
+		{name: "not applied 50", purchaseMin: 100, discountPercent: 20, amount: 50, expected: 50},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
@@ -71,6 +72,17 @@ func TestPromotionCalculateDiscount(t *testing.T) {
 		// Assert
 		assert.ErrorIs(t, err, services.ErrZeroAmount)
 		promoRepo.AssertNotCalled(t,"GetPromotion")
+	})
+
+	t.Run("repository error", func(t *testing.T) {
+		// Arrage
+		promoRepo := repositories.NewPromotionRepositoryMock()
+		promoRepo.On("GetPromotion").Return(repositories.Promotion{}, errors.New(""))
+		promoService := services.NewPromotionService(promoRepo)
+		// Act
+		_, err := promoService.CalculateDiscount(100)
+		// Assert
+		assert.ErrorIs(t, err, services.ErrZeroAmount)
 	})
 
 }

@@ -19,7 +19,9 @@ func (s promotionService) CalculateDiscount(amount int) (int, error) {
 	if amount <= 0 {
 		return 0, ErrZeroAmount
 	}
+
 	promotion, err := s.promoRepo.GetPromotion()
+	
 	if err != nil {
 		return 0, ErrRepository
 	}
@@ -27,5 +29,6 @@ func (s promotionService) CalculateDiscount(amount int) (int, error) {
 	if amount >= promotion.PurchaseMin {
 		return amount - (promotion.DiscountPercent * amount / 100), nil
 	}
+	
 	return amount, nil
 }
